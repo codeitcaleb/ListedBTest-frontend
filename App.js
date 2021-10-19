@@ -11,16 +11,13 @@ export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator>
-        <Stack.Screen
-                name="Activities"
-                component={Activities}
-                animationEnabled={true}
-                gestureEnabled={true}
-          />
+          <Stack.Screen
+                  name="Activities"
+                  component={Activities}
+                  animationEnabled={true}
+                  gestureEnabled={true}
+            />
       </Stack.Navigator>
-        
-
-
     </NavigationContainer>
   );
 }
