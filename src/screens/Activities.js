@@ -1,9 +1,11 @@
 import React, { Component, useState, useEffect } from 'react';
 import { View, Text, TextInput, Image, FlatList, Pressable, Button, Platform, StyleSheet } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
+
+
 import {URL} from '@env'
 
-const Activities = () => {
+const Activities = ({navigation}) => {
     const [username, setUsername] = useState('')
     const [message, setMessage] = useState('')
     const [imageURL, setImageURL] = useState(null)
@@ -60,14 +62,24 @@ const Activities = () => {
       .then(respData => setActivities(respData))
     }
 
+    const handleActivityClick = (item) => {
+      navigation.navigate("ActivityPage", {
+          id: item.id,
+          username: item.username,
+          message: item.message,
+          image_url: item.image_url
+      })
+    }
+
     const renderItem = ({ item }) => {
-        return (
-          <View>
-              <Text>{item.username}</Text>
-              <Text>{item.message}</Text>
-              <Image source={{uri: item.image_url}} style={{ width: 200, height: 200 }} />
-          </View>
-        );
+        return  (
+            <View style={styles.cardContainer}>
+                <Pressable onPress={() => handleActivityClick(item)}>
+                    <Image source={{uri: item.image_url}} style={{ width: 200, height: 200 }} />    
+                    <Text>{item.username} is {item.message}</Text>
+                </Pressable>
+            </View>
+        )
       };
 
     return (
@@ -114,7 +126,6 @@ const Activities = () => {
                 )
               }
                 
- 
             </View>
            
         // </View>
@@ -128,6 +139,9 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: '#2c3e50',
+    },
+    cardContainer: {
+        margin: "10pt"
     },
     formInputs: {
         borderColor: 'white',
